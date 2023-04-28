@@ -1,37 +1,4 @@
-[9:40 pm, 28/04/2023] Ahmed Adel: import requests
-
-class CurrencyConverter:
-    """A singleton class that provides currency conversion services."""
-
-    _instance = None
-
-    def _new_(cls):
-        if cls._instance is None:
-            cls.instance = super().new_(cls)
-        return cls._instance
-
-    def convert(self, from_currency, to_currency, amount):
-        """Converts an amount of money from one currency to another.
-
-        Args:
-            from_currency: The currency to convert from.
-            to_currency: The currency to convert to.
-            amount: The amount of money to convert.
-
-        Returns:
-            The converted amount of money.
-        """
-
-        # Get the exchange rate from an online source.
-        exchange_rate = requests.get("https://api.exchangeratesapi.i…
-[10:53 pm, 28/04/2023] sohaila nasr: To fix this error, you need to pass the amount argument when calling the convert method of the CurrencyController instance. For example:
-[10:53 pm, 28/04/2023] sohaila nasr: # Create a CurrencyController instance
-currency_controller = CurrencyController()
-
-# Convert the amount of money
-converted_amount = currency_controller.convert(from_currency, to_currency, amount)
-[11:59 pm, 28/04/2023] محمد داله: ahmed adel whare are you?
-[0:19 am, 29/04/2023] Ahmed Adel: import requests
+import requests
 import json
 import tkinter as tk
 
@@ -43,9 +10,9 @@ class CurrencyConverter:
 
     _instance = None
 
-    def _new_(cls):
+    def __new__(cls):
         if cls._instance is None:
-            cls.instance = super().new_(cls)
+            cls._instance = super().__new__(cls)
         return cls._instance
 
     def convert(self, from_currency, to_currency, amount):
@@ -60,7 +27,7 @@ class CurrencyConverter:
 class CurrencyFactory:
     """A factory class that creates Currency objects."""
 
-    def _init_(self):
+    def __init__(self):
         self._currencies = {}
 
     def create_currency(self, currency_code):
@@ -81,7 +48,7 @@ class CurrencyFactory:
 class Currency:
     """A class that represents a currency."""
 
-    def _init_(self, currency_code):
+    def __init__(self, currency_code):
         self._currency_code = currency_code
 
     def get_currency_code(self):
@@ -108,7 +75,7 @@ class Currency:
 class CurrencyObserver:
     """An abstract class that represents an observer of currency events."""
 
-    def _init_(self):
+    def __init__(self):
         pass
 
     def on_currency_updated(self, currency):
@@ -123,7 +90,7 @@ class CurrencyObserver:
 class CurrencyState:
     """A class that represents the state of a currency."""
 
-    def _init_(self, currency, exchange_rate):
+    def __init__(self, currency, exchange_rate):
         self._currency = currency
         self._exchange_rate = exchange_rate
 
@@ -139,7 +106,7 @@ class CurrencyState:
 
 class CurrencyController:
     """A class that controls the currency converter."""
-    def _init_(self):
+    def __init__(self):
         self._currency_converter = CurrencyConverter()
         self._currency_factory = CurrencyFactory()
         self._currency_observers = []
@@ -199,7 +166,7 @@ class CurrencyController:
 
 
 class CurrencyConverter:
-    def init(self, base_currency, target_currency):
+    def _init_(self, base_currency, target_currency):
         self.base_currency = base_currency
         self.target_currency = target_currency
         self.exchange_rate = 0.0
@@ -222,7 +189,7 @@ class CurrencyConverterFactory:
 
 
 class CurrencyConverterView:
-    def init(self):
+    def _init_(self):
         self.amount = float(input("Enter amount: "))
         self.base_currency = input("Enter base currency: ")
         self.target_currency = input("Enter target currency: ")
@@ -232,7 +199,7 @@ class CurrencyConverterView:
 
 
 class CurrencyConverterController:
-    def init(self):
+    def _init_(self):
         view = CurrencyConverterView()
         converter = CurrencyConverterFactory.create_currency_converter(view.base_currency, view.target_currency)
         converter.get_exchange_rate()
@@ -240,7 +207,7 @@ class CurrencyConverterController:
         view.display_converted_amount(converted_amount)
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
 
     # Get the user input.
     from_currency = input("What currency would you like to convert from? ")
@@ -255,3 +222,5 @@ if _name_ == "_main_":
 
     # Print the converted amount.
     print(f"{amount} {from_currency} is equal to {converted_amount} {to_currency}.")
+
+
