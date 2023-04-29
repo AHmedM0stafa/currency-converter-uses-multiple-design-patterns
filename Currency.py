@@ -1,6 +1,6 @@
 import requests
 import json
-import tkinter as tk
+
 
 from appier.common import model
 
@@ -114,25 +114,41 @@ class CurrencyController:
         self.to_currency = to_currency
         self.exchange_rate = 0.0
 
+    # def convert(self, from_currency, to_currency, amount):
+    #     url = "https://api.apilayer.com/currency_data/list?to={to_currency}&from={from_currency}&amount={amount}"
+
+    #     payload = {}
+    #     headers = {
+    #         "apikey": "aHOW8oAcyjz6TZE6VUAVxJ30owvMtzPW"
+    #     }
+    #     response = requests.request("GET", url, headers=headers, data=payload)
+    #     print(response)
+    #     data = response.json()
+    #     print(data)
+
+    #     self.exchange_rate = data["app_id"][converted_amount]
+        
+
+    #     return converted_amount
     def convert(self, from_currency, to_currency, amount):
+        
         url = "https://api.apilayer.com/currency_data/convert?to={to_currency}&from={from_currency}&amount={amount}"
 
         payload = {}
         headers = {
             "apikey": "aHOW8oAcyjz6TZE6VUAVxJ30owvMtzPW"
         }
-
         response = requests.request("GET", url, headers=headers, data=payload)
 
-
-        response = requests.get(url)
         data = response.json()
-        self.exchange_rate = data["rates"][self.target_currency]
+        print(data)
 
-
-
-
-        return converted_amount
+        if data["query"]:
+            self.exchange_rate = data["info"][to_currency]
+            return amount * self.exchange_rate
+        else:
+            raise Exception("Error gettingexchangerate")
+    
 
     def add_observer(self, observer):
         """Adds an observer to the currency controller.
